@@ -1,0 +1,83 @@
+﻿@using Ispit19072022.Models.ViewModel
+@model CreateTaskViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    int toDoListId = ViewBag.ToDoListId;
+ 
+}
+
+<h1>Details</h1>
+@Html.ActionLink("Create", "CreateTask", new {  id=Model.ToLisId })
+@*<p>
+
+
+
+        @Html.ActionLink("Create", "CreateTask", new {  id=toDoListId })
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Status
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Tasks)
+        {
+               string redirectUrl = Url.Action("ChangeTaskStatus","UserProfile",new {  id=item.Id, status = !item.Status  });
+
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @if (item.Status)
+                    {
+                        <input type="checkbox" onclick="RedirectToUrl('@redirectUrl')" checked>
+                    }
+                    else
+                    {
+                        <input type="checkbox" onclick="RedirectToUrl('@redirectUrl')">
+                    }
+
+
+
+                    @*             @Html.DisplayFor(modelItem => item.Status)*@
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<script>
+    function RedirectToUrl(url) {
+        console.log(url);
+        window.location.href = url;
+
+    }
+
+
+</script>
